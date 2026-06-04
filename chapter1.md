@@ -114,6 +114,7 @@ $$
 
 ## 1.2 Flow on the line
 As a simple example, consider:
+
 $$
  \dot x= \sin x 
 $$       
@@ -143,3 +144,8 @@ $$
 This is the precise meaning of stability: **small perturbations away from $x^*$ decay rather than grow**. The stable fixed point is the inevitable long-run destination for every initial condition in its neighborhood.
 
 By contrast, near an unstable fixed point any tiny displacement is amplified by the flow. In practice, a particle placed "at" an unstable fixed point always has some infinitesimal perturbation — numerical round-off, physical noise — and that perturbation is enough to send it away. Unstable fixed points are rarely observed in nature; stable ones are.
+
+Based on above observation, we can esitmate that for the particle starting at $0$, $\pi$ , $2\pi$..., it will be stationary, for particle starting between $(0,2\pi)$, it will converge to the stable fixed point $\pi$, for the  particle starting between $(-2\pi,0)$, it will converge to the stable fixed point $-\pi$. Without solving the equation, we can draw the picture of the solution.
+
+ <img src="chapter1/plot12.png">  
+
