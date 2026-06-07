@@ -120,7 +120,8 @@ $$
 $$       
 
 To understand the solution behavior, it helps to interpret this equation geometrically as a vector field on the line. In the figure,
-<img src="chapter1/1.1.png"  >
+
+![](chapter1/1.1.png)
 
 $t$ is time, $x$ is the particle's position on the real line, and $\dot x$ is its velocity. The equation $\dot x = \sin x$ assigns each position $x$ a velocity $\dot x$, which we represent as a vector at that point.
 
@@ -147,7 +148,7 @@ By contrast, near an unstable fixed point any tiny displacement is amplified by 
 
 Based on above observation, we can esitmate that for the particle starting at $0$, $\pi$ , $2\pi$..., it will be stationary, for particle starting between $(0,2\pi)$, it will converge to the stable fixed point $\pi$, for the  particle starting between $(-2\pi,0)$, it will converge to the stable fixed point $-\pi$. Without solving the equation, we can draw the picture of the solution.
 
- <img src="chapter1/plot12.png">  
+![](chapter1/plot12.png)  
 
 ## 1.3 Fixed point stability analysis
 Let's give a formal definition of the stability of a fixed point.
@@ -161,6 +162,8 @@ In other words, for any given tolerance ε, there exists a neighborhood of the i
 Since $x^*$ is a fixed point, $f(x^*) = 0$.
 
 For $x$ near $x^*$, use Taylor expansion:
+
+
 $$f(x) = f(x^*) + f'(x^*)(x - x^*) + O((x - x^*)^2)$$
 
 $$f(x) = f'(x^*)(x - x^*) + O((x - x^*)^2)$$
@@ -249,6 +252,6 @@ Consider the initial value problem:
 $$\frac{dx}{dt} = f(x), \quad x(t_0) = x_0$$
 
 If $f(x)$ and $\frac{df}{dx}$ are continuous in an interval 
-$$R = \{x: |x-x_0| \lt a\}$$
+$$ R = \{x: |x-x_0| < a\} $$
 
-then there exists $h > 0$ and a unique solution $x(t)$ defined for $|t-t_0| \lt h$.
+then there exists $h > 0$ and a unique solution $x(t)$ defined for $|t-t_0| < h$.
