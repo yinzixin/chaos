@@ -149,3 +149,106 @@ Based on above observation, we can esitmate that for the particle starting at $0
 
  <img src="chapter1/plot12.png">  
 
+## 1.3 Fixed point stability analysis
+Let's give a formal definition of the stability of a fixed point.
+
+**Definition (Lyapunov Stability):** A fixed point $x^*$ is **stable** if:
+
+For every $\epsilon > 0$, there exists $\delta > 0$ such that whenever $|x(0) - x^*| < \delta$, we have $|x(t) - x^*| < \epsilon$ for all $t \geq 0$.
+
+In other words, for any given tolerance ε, there exists a neighborhood of the initial condition such that all solutions originating from initial values within this neighborhood remain within ε of the reference solution.
+
+Since $x^*$ is a fixed point, $f(x^*) = 0$.
+
+For $x$ near $x^*$, use Taylor expansion:
+$$f(x) = f(x^*) + f'(x^*)(x - x^*) + O((x - x^*)^2)$$
+
+$$f(x) = f'(x^*)(x - x^*) + O((x - x^*)^2)$$
+
+Define the perturbation: $\xi(t) = x(t) - x^*$, 
+
+> note $x(t)$ is the solution of the initial condition $x(0)=x$, and $x^*$ is the solution of the initial condition $x(0)=x^*$,which is a constant value function, $\xi=x-x^*<\delta$
+
+Then:
+$$\dot{\xi}(t) = \dot{x}(t) = f(x(t)) = f(x^* + \xi(t))$$
+
+$$\dot{\xi}(t) = f'(x^*)\xi(t) + O(\xi^2)$$
+
+The **linearized system** near $x^*$ is:
+$$\dot{\xi} = f'(x^*) \xi$$
+
+This is called the **linear (or variational) equation** at the fixed point.
+
+The linearized equation $\dot{\xi} = \lambda \xi$ where $\lambda = f'(x^*)$ has the general solution:
+
+$$\xi(t) = \xi(0) e^{\lambda t}$$
+
+**Case 1: $\lambda = f'(x^*) < 0$**
+
+$$\xi(t) = \xi(0) e^{\lambda t} \to 0 \text{ as } t \to \infty$$
+
+The perturbation decays exponentially. For the original system:
+
+$$x(t) = x^* + \xi(t) \to x^* \text{ as } t \to \infty$$
+
+
+**Case 2: $\lambda = f'(x^*) > 0$**
+
+$$\xi(t) = \xi(0) e^{\lambda t} \to \infty \text{ as } t \to \infty$$
+
+(for any $\xi(0) \neq 0$)
+
+The perturbation grows exponentially away from the fixed point.Thus, $x^*$ is unstable.
+
+**Case 3: $\lambda = f'(x^*) = 0$**
+
+The linear analysis cannot determine the stability and requires non-linear analysis.
+
+Examples:
+For each system, identify the fixed point and determine stability:
+
+1. **$\dot{x} = e^x - 2$**
+   - Fixed point: $e^{x^*} = 2 \Rightarrow x^* = \ln 2$
+   - Derivative: $f'(x) = e^x \Rightarrow f'(\ln 2) = 2 > 0$
+   - Stability: **Unstable** 
+
+2. **$\dot{x} = \cos(x) - x$**
+   - Fixed point: $\cos(x^*) = x^*$ (transcendental, but exists)
+   - Derivative: $f'(x) = -\sin(x) - 1 \Rightarrow f'(x^*) = -\sin(x^*) - 1 < -1$
+   - Stability: **Stable** (since $f'(x^*) < 0$) 
+
+3. **$\dot{x} = \sin(\pi x)$**
+   - Fixed points: $\sin(\pi x^*) = 0 \Rightarrow x^* = n$ for $n \in \mathbb{Z}$
+   - Derivative: $f'(x) = \pi\cos(\pi x)$
+   - At $x^* = 0$: $f'(0) = \pi > 0$ → **Unstable**
+   - At $x^* = 1$: $f'(1) = -\pi < 0$ → **Stable**
+   - At $x^* = 2$: $f'(2) = \pi > 0$ → **Unstable** 
+
+## 1.4 Existence-Uniqueness Theorem
+In the preceding discussion, we overlooked the uniqueness of solutions. If multiple trajectories pass through a single point, or if trajectories intersect, geometric analysis becomes invalid.Let's look at an example:
+
+$\dot x=x^\frac{1}{3}$,starting from $x_0=0$.
+
+$x=0$ is a fixed point, so $x(t)=0$ is its solution. However, there's a different solution.
+
+$$ \frac{dx}{dt} = x^\frac{1}{3}$$
+$$ x^ {-\frac{1}{3}} dx=dt $$
+$$ \int x^ {-\frac{1}{3}}dx=\int dt $$
+$$ \frac{3}{2}x^{\frac{2}{3}}=t+C  $$
+with initial contion $x(0)=0$ we know $C=0$, so
+
+$$ x(t)= (\frac{2}{3}t)^\frac{3}{2} $$
+is also a solution.
+
+The root cause of uniqueness is the derivative of x(t) is infinite at t = 0.
+
+We will provide a sufficient condition for the uniqueness of the solution, the proof of the statement is beyond the scope of the topic.
+
+**Statement:**
+Consider the initial value problem:
+$$\frac{dx}{dt} = f(x), \quad x(t_0) = x_0$$
+
+If $f(x)$ and $\frac{df}{dx}$ are continuous in an interval 
+$$R = \{x: |x-x_0| \lt a\}$$
+
+then there exists $h > 0$ and a unique solution $x(t)$ defined for $|t-t_0| \lt h$.
