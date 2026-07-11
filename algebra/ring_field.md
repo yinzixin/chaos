@@ -686,3 +686,275 @@ The isomorphism — being simultaneously surjective and injective — packages b
 **Example 31.** In $\mathbb{Z}$, take $I_1 = m\mathbb{Z}$ and $I_2 = n\mathbb{Z}$ with $\gcd(m,n)=1$. Then $I_1 + I_2 = \mathbb{Z}$ (coprime), $I_1 \cap I_2 = mn\mathbb{Z}$, and CRT gives:
 $$\mathbb{Z}/mn\mathbb{Z} \cong \mathbb{Z}/m\mathbb{Z} \oplus \mathbb{Z}/n\mathbb{Z}, \quad \text{i.e., } \mathbb{Z}_{mn} \cong \mathbb{Z}_m \oplus \mathbb{Z}_n.$$
 This is the classical Chinese Remainder Theorem: a system of congruences modulo pairwise coprime moduli has a unique solution modulo their product.
+
+---
+
+## 13. Prime Ideals and Maximal Ideals
+
+Throughout this section, $R$ denotes a **commutative ring with unity**. Both notions below are defined via the quotient ring $R/I$: a prime ideal is one whose quotient is an integral domain, a maximal ideal is one whose quotient is a field.
+
+### 13.1 Prime Ideals
+
+#### Definition
+
+A proper ideal $P \trianglelefteq R$ (i.e., $P \neq R$) is called a **prime ideal** (素理想) if:
+$$ab \in P \implies a \in P \text{ or } b \in P, \quad \text{for all } a, b \in R.$$
+
+> **Why "prime"?** This mimics the defining property of a prime number $p$: $p \mid ab \implies p \mid a$ or $p \mid b$. Indeed, the ideals $p\mathbb{Z} \trianglelefteq \mathbb{Z}$ are exactly the prime ideals of $\mathbb{Z}$ (Example 32 below).
+
+#### Theorem (Prime Ideal Criterion)
+
+> **Theorem.** Let $R$ be a commutative ring with unity and $P$ a proper ideal of $R$. Then $P$ is prime if and only if $R/P$ is an integral domain.
+
+**Proof.**
+
+$(\Rightarrow)$ Suppose $P$ is prime. Since $P \neq R$, $R/P$ is a non-zero ring, and since $R$ has unity, so does $R/P$ (with unity $1 + P$, and $1 + P \neq 0 + P$ because $1 \notin P$). Suppose $(a+P)(b+P) = 0 + P$ in $R/P$, i.e., $ab + P = P$, i.e., $ab \in P$. Since $P$ is prime, $a \in P$ or $b \in P$, i.e., $a + P = 0+P$ or $b+P = 0+P$. Hence $R/P$ has no zero divisors, so it is an integral domain.
+
+$(\Leftarrow)$ Suppose $R/P$ is an integral domain. Then $R/P$ is non-zero, so $P \neq R$. Suppose $ab \in P$. Then $(a+P)(b+P) = ab + P = 0 + P$ in $R/P$. Since $R/P$ has no zero divisors, $a + P = 0+P$ or $b+P = 0+P$, i.e., $a \in P$ or $b \in P$. Hence $P$ is prime. $\square$
+
+#### Examples
+
+**Example 32.** The prime ideals of $\mathbb{Z}$ are exactly $\{0\}$ and $p\mathbb{Z}$ for $p$ prime.
+
+*Proof sketch.* By the theorem, $n\mathbb{Z}$ is prime iff $\mathbb{Z}/n\mathbb{Z} = \mathbb{Z}_n$ is an integral domain. By Example 22–25 and the non-example following Example 25, $\mathbb{Z}_n$ is an integral domain iff $n = 0$ or $n$ is prime. $\checkmark$
+
+Note $2\mathbb{Z}$ is prime but not maximal is false here — we will see in Example 34 that $p\mathbb{Z}$ ($p$ prime) is in fact maximal, while $\{0\}$ is prime but **not** maximal (since $\{0\} \subsetneq 2\mathbb{Z} \subsetneq \mathbb{Z}$).
+
+**Example 33.** $\langle x \rangle = x\mathbb{Z}[x] \trianglelefteq \mathbb{Z}[x]$ is prime, since $\mathbb{Z}[x]/\langle x\rangle \cong \mathbb{Z}$ (Example 21) is an integral domain.
+
+**Non-example.** $\langle 4 \rangle = 4\mathbb{Z} \trianglelefteq \mathbb{Z}$ is not prime: $2 \cdot 2 = 4 \in 4\mathbb{Z}$, but $2 \notin 4\mathbb{Z}$.
+
+### 13.2 Maximal Ideals
+
+#### Definition
+
+A proper ideal $M \trianglelefteq R$ is called a **maximal ideal** (极大理想) if there is no ideal $J$ with $M \subsetneq J \subsetneq R$. Equivalently, the only ideals containing $M$ are $M$ itself and $R$.
+
+#### Theorem (Maximal Ideal Criterion)
+
+> **Theorem.** Let $R$ be a commutative ring with unity and $M$ a proper ideal of $R$. Then $M$ is maximal if and only if $R/M$ is a field.
+
+**Proof.**
+
+$(\Rightarrow)$ Suppose $M$ is maximal. Since $R$ is commutative with unity, so is $R/M$, and it is non-zero since $M \neq R$. Let $a + M \neq 0 + M$ be a non-zero element of $R/M$, i.e., $a \notin M$. Consider the ideal $M + \langle a \rangle$ (the smallest ideal containing $M$ and $a$, using the ideal sum from Section 11). Since $a \notin M$, we have $M \subsetneq M + \langle a \rangle$. By maximality of $M$, this forces $M + \langle a \rangle = R$. In particular $1 \in M + \langle a \rangle$, so
+$$1 = m + ra \quad \text{for some } m \in M,\ r \in R.$$
+Reducing modulo $M$: $1 + M = ra + M = (r+M)(a+M)$. Hence $a + M$ is invertible in $R/M$, with inverse $r + M$. Since every non-zero element of $R/M$ is invertible, $R/M$ is a field.
+
+$(\Leftarrow)$ Suppose $R/M$ is a field. Then $R/M$ is non-zero, so $M \neq R$. Let $J$ be an ideal with $M \subsetneq J \subseteq R$; we show $J = R$. Pick $a \in J \setminus M$. Then $a + M \neq 0+M$ in $R/M$, so since $R/M$ is a field, there exists $b \in R$ with $(a+M)(b+M) = 1+M$, i.e., $ab - 1 \in M \subseteq J$. Since $a \in J$ and $J$ is an ideal, $ab \in J$; combined with $ab - 1 \in J$, we get $1 = ab - (ab-1) \in J$. Then for any $r \in R$, $r = r\cdot 1 \in J$, so $J = R$. Hence $M$ is maximal. $\square$
+
+#### Corollary: Every Maximal Ideal is Prime
+
+> **Corollary.** In a commutative ring with unity, every maximal ideal is a prime ideal.
+
+**Proof.** If $M$ is maximal, $R/M$ is a field (by the theorem above), hence an integral domain (fields have no zero divisors — Section 2 and the table in Section 2). By the Prime Ideal Criterion, $M$ is prime. $\square$
+
+The converse is **false** in general: $\{0\} \trianglelefteq \mathbb{Z}$ is prime (since $\mathbb{Z}$ is an integral domain) but not maximal (since $\{0\} \subsetneq 2\mathbb{Z} \subsetneq \mathbb{Z}$). This gives the refined hierarchy of ideals:
+$$\text{maximal} \implies \text{prime} \implies \text{proper},$$
+mirroring the hierarchy of quotients:
+$$\text{field} \implies \text{integral domain} \implies \text{non-zero ring}.$$
+
+#### Examples
+
+**Example 34.** For a prime $p$, $p\mathbb{Z} \trianglelefteq \mathbb{Z}$ is maximal, since $\mathbb{Z}/p\mathbb{Z} \cong \mathbb{Z}_p$ is a field (Corollary in Section 10). Conversely, every non-zero prime ideal of $\mathbb{Z}$ is of this form (Example 32), so **in $\mathbb{Z}$, every non-zero prime ideal is maximal.**
+
+> **Remark.** This "prime = maximal" collapse (away from $\{0\}$) is special to rings like $\mathbb{Z}$ where every non-zero prime ideal is maximal — such rings, together with a few extra conditions, are called **principal ideal domains**, and this phenomenon (Krull dimension $1$) does not persist in higher-dimensional rings such as $\mathbb{Z}[x]$ or $k[x,y]$.
+
+**Example 35.** $\langle x \rangle \trianglelefteq \mathbb{Z}[x]$ is prime but **not** maximal: $\mathbb{Z}[x]/\langle x\rangle \cong \mathbb{Z}$ (Example 21, 33) is an integral domain but not a field. Indeed, $\langle x\rangle \subsetneq \langle x, 2\rangle \subsetneq \mathbb{Z}[x]$, so $\langle x \rangle$ is not maximal. One checks $\langle x, 2\rangle$ *is* maximal, since $\mathbb{Z}[x]/\langle x,2\rangle \cong \mathbb{Z}_2$, a field.
+
+**Example 36.** In $\mathbb{R}[x]$, the ideal $\langle x^2+1\rangle$ is maximal, since $\mathbb{R}[x]/\langle x^2+1\rangle \cong \mathbb{C}$ (Example 19) is a field.
+
+**Example 37.** In $S = \mathbb{Z}_6$, the ideal $\{0,2,4\}$ (Example 8) is maximal: $\mathbb{Z}_6 / \{0,2,4\} \cong \mathbb{Z}_2$ (the map $\mathbb{Z}_6 \to \mathbb{Z}_2$, $n \mapsto n \bmod 2$, has this kernel), a field. Similarly $\{0,3\}$ is maximal with quotient $\mathbb{Z}_3$. Both correspond to the CRT decomposition $\mathbb{Z}_6 \cong \mathbb{Z}_2 \oplus \mathbb{Z}_3$ (Example 29).
+
+### 13.3 Existence of Maximal Ideals
+
+> **Theorem.** Every proper ideal $I$ of a ring $R$ with unity is contained in some maximal ideal.
+
+*Idea of proof.* Consider the set $\Sigma$ of proper ideals containing $I$, partially ordered by inclusion. It is non-empty ($I \in \Sigma$), and every chain in $\Sigma$ has an upper bound (the union of the chain — one checks this union is still a proper ideal, since it cannot contain $1$). By **Zorn's Lemma**, $\Sigma$ has a maximal element, which is a maximal ideal of $R$ containing $I$. $\square$
+
+In particular, taking $I = \{0\}$: **every non-zero ring with unity has a maximal ideal.**
+
+### 13.4 Summary
+
+| Ideal type | Condition on quotient | Implication |
+|---|---|---|
+| Proper ideal | $R/I \neq \{0\}$ | — |
+| Prime ideal | $R/P$ is an integral domain | Maximal $\implies$ Prime |
+| Maximal ideal | $R/M$ is a field | (converse false in general) |
+
+This dictionary — turning ring-theoretic properties of $R/I$ into ideal-theoretic properties of $I$ — is the same technique used throughout Sections 8–10, and is the key bridge connecting ideal theory to the classification of rings by their quotients.
+
+---
+
+## 14. Constructing Extension Fields and Finite Fields
+
+### 14.1 Motivation
+
+We know $\mathbb{Z}_p$ is a field for every prime $p$ (Section 10), and more generally $R/M$ is a field exactly when $M$ is maximal (Section 13.2). Are there finite fields other than $\mathbb{Z}_p$? Yes — for every prime $p$ and every $n \geq 1$ there is a field with exactly $p^n$ elements. The construction runs entirely through the maximal-ideal machinery just developed, applied to the polynomial ring $k[x]$.
+
+### 14.2 $k[x]$ is a Principal Ideal Domain
+
+#### Definition
+
+Let $R$ be a ring. An ideal $I \trianglelefteq R$ is called a **principal ideal** (主理想) if it is generated by a single element $a \in R$:
+$$I = \langle a \rangle = \{ ra \mid r \in R \}.$$
+An integral domain $R$ in which **every** ideal is principal is called a **principal ideal domain** (主理想整环, **PID**).
+
+> **Remark.** The point is not that *some* ideals are principal — $\{0\} = \langle 0\rangle$ and $R = \langle 1\rangle$ always are — but that *all of them* are, with no exceptions. This section shows $k[x]$ has this property, alongside the already-familiar case of $\mathbb{Z}$ (Example 13).
+
+#### Division Algorithm
+
+> **Theorem.** Let $k$ be a field and $f, g \in k[x]$ with $g \neq 0$. There exist unique $q, r \in k[x]$ with
+> $$f = qg + r, \qquad r = 0 \text{ or } \deg r < \deg g.$$
+
+*Proof sketch.* *Existence*, by induction on $\deg f$: if $\deg f < \deg g$, take $q = 0, r = f$. Otherwise let $a, b$ be the leading coefficients of $f, g$ and $m = \deg f \geq n = \deg g$. Since $k$ is a field, $b^{-1}$ exists, and $f - (ab^{-1}x^{m-n})g$ has degree $< m$; apply the inductive hypothesis to it. *Uniqueness*: if $qg + r = q'g + r'$, then $(q-q')g = r' - r$; the right side has degree $< \deg g$ while the left side has degree $\geq \deg g$ unless $q = q'$, forcing $r = r'$ too. $\square$
+
+> **Remark.** Invertibility of leading coefficients is where "$k$ is a field" is used essentially — the algorithm fails over $\mathbb{Z}$ (e.g. one cannot divide $x$ by $2x$ within $\mathbb{Z}[x]$).
+
+#### Corollary: $k[x]$ is a PID
+
+> **Corollary.** Every ideal of $k[x]$ is principal: $I = \langle f(x)\rangle$ for some $f \in k[x]$.
+
+**Proof.** If $I = \{0\}$, take $f = 0$. Otherwise let $f \in I$ be nonzero of minimal degree. For any $g \in I$, divide $g = qf + r$ with $r = 0$ or $\deg r < \deg f$. Since $g, f \in I$, $r = g - qf \in I$; minimality of $\deg f$ forces $r = 0$, so $g = qf \in \langle f\rangle$. Hence $I = \langle f \rangle$. $\square$
+
+(Compare Example 13: $\mathbb{Z}$ is likewise a PID, and the same division-algorithm argument is exactly how one proves it.)
+
+### 14.3 Irreducible Polynomials Generate Maximal Ideals
+
+#### Definition
+
+Let $k$ be a field. A polynomial $f(x) \in k[x]$ with $\deg f \geq 1$ is **irreducible** (不可约) over $k$ if $f = gh$ with $g, h \in k[x]$ forces $\deg g = 0$ or $\deg h = 0$. Otherwise $f$ is **reducible**.
+
+> Irreducibility is relative to $k$: $x^2+1$ is irreducible over $\mathbb{R}$ but factors as $(x-i)(x+i)$ over $\mathbb{C}$.
+
+#### Theorem
+
+> **Theorem.** Let $k$ be a field and $f \in k[x]$ non-constant. Then $\langle f(x)\rangle$ is a maximal ideal of $k[x]$ if and only if $f$ is irreducible over $k$.
+
+**Proof.**
+
+$(\Leftarrow)$ Since $\deg f \geq 1$, $1 \notin \langle f \rangle$, so $\langle f\rangle \neq k[x]$. Let $J$ be an ideal with $\langle f\rangle \subseteq J \subseteq k[x]$. By the Corollary, $J = \langle g\rangle$ for some $g$, and $f \in \langle g\rangle$ means $g \mid f$, say $f = gh$. Irreducibility of $f$ forces $\deg g = 0$ or $\deg h = 0$.
+- If $\deg g = 0$: $g$ is a nonzero constant, hence a unit, so $\langle g \rangle = k[x]$, i.e. $J = k[x]$.
+- If $\deg h = 0$: then $g = f h^{-1}$, so $g$ and $f$ differ by a unit and $\langle g \rangle = \langle f \rangle$, i.e. $J = \langle f\rangle$.
+
+Either way $J \in \{\langle f\rangle, k[x]\}$, so $\langle f\rangle$ is maximal.
+
+$(\Rightarrow)$ Suppose instead $f = gh$ with $\deg g, \deg h \geq 1$ (i.e. $f$ reducible). Then $f \in \langle g \rangle$, so $\langle f\rangle \subseteq \langle g\rangle$. If $\langle f \rangle = \langle g\rangle$ then $f \mid g$, giving $\deg f \leq \deg g$; but $\deg g < \deg f$ since $\deg h \geq 1$ — contradiction. So $\langle f\rangle \subsetneq \langle g \rangle$. Also $\langle g \rangle \neq k[x]$ since $\deg g \geq 1$. Hence $\langle f \rangle \subsetneq \langle g\rangle \subsetneq k[x]$, so $\langle f\rangle$ is **not** maximal. $\square$
+
+#### Corollary (the field-construction engine)
+
+> **Corollary.** If $k$ is a field and $f(x) \in k[x]$ is irreducible, then $k[x]/\langle f(x)\rangle$ is a field.
+
+**Proof.** Immediate from the theorem above and the Maximal Ideal Criterion (Section 13.2). $\square$
+
+Every construction below is this one corollary applied to a specific $k$ and $f$.
+
+### 14.4 Kronecker's Theorem: Adjoining a Root
+
+> **Theorem (Kronecker).** Let $k$ be a field and $f(x) \in k[x]$ non-constant. There is a field $K \supseteq k$ in which $f$ has a root.
+
+**Proof.** Let $p(x)$ be an irreducible factor of $f(x)$ (take $p = f$ if $f$ is already irreducible), and set $K = k[x]/\langle p(x)\rangle$, a field by the Corollary. The map $\iota : k \to K$, $\iota(a) = a + \langle p(x)\rangle$, is a ring homomorphism; since $k$ is a field (a simple ring, Example 16), $\ker \iota$ is $\{0\}$ or $k$, and it is not $k$ since $\iota(1) = 1 + \langle p(x)\rangle \neq 0$ (as $\deg p \geq 1$). So $\iota$ is injective, embedding $k$ into $K$; identify $k$ with its image. Let $\alpha = x + \langle p(x)\rangle$. Writing $p(x) = c_0 + c_1x + \cdots + c_nx^n$:
+$$p(\alpha) = c_0 + c_1\alpha + \cdots + c_n\alpha^n = \big(c_0 + c_1x + \cdots + c_nx^n\big) + \langle p(x)\rangle = p(x) + \langle p(x)\rangle = 0.$$
+So $\alpha \in K$ is a root of $p(x)$, hence of $f(x)$. $\square$
+
+This is precisely what produced $\mathbb{C}$ from $\mathbb{R}$ in Example 19: $x^2+1$ is irreducible over $\mathbb{R}$, and $\mathbb{R}[x]/\langle x^2+1\rangle \cong \mathbb{C}$ adjoins the root $\alpha = x + \langle x^2+1\rangle$, playing the role of $i$.
+
+### 14.5 Finite Fields
+
+#### Characteristic
+
+The **characteristic** $\operatorname{char}(R)$ of a ring with unity $R$ is the least $n > 0$ with $\underbrace{1 + \cdots + 1}_{n} = 0$, or $0$ if no such $n$ exists.
+
+> **Proposition.** The characteristic of an integral domain is $0$ or a prime $p$.
+
+*Proof.* If $\operatorname{char}(R) = n = ab$ with $1 < a,b < n$, then, writing $\overline{m}$ for $\underbrace{1+\cdots+1}_m$, distributivity gives $\overline{a}\cdot\overline{b} = \overline{n} = 0$. No zero divisors force $\overline a = 0$ or $\overline b = 0$, contradicting minimality of $n$. $\square$
+
+A finite field $F$ cannot have characteristic $0$ (the elements $1, \overline 2, \overline 3, \ldots$ would then be infinitely many distinct elements of $F$), so $\operatorname{char}(F) = p$ for some prime $p$. The set $\{0, 1, \overline 2, \ldots, \overline{p-1}\}$ then forms a subring isomorphic to $\mathbb{Z}_p$, called the **prime subfield** of $F$.
+
+#### Every Finite Field has Order $p^n$
+
+> **Theorem.** A finite field $F$ has $|F| = p^n$ elements, where $p = \operatorname{char}(F)$ and $n = \dim_k F$ for $k \cong \mathbb{Z}_p$ the prime subfield.
+
+*Proof.* View $F$ as a vector space over its prime subfield $k$ (vector addition = ring addition, scalar multiplication = ring multiplication restricted to $k \times F$; the field axioms of $F$ give exactly the vector space axioms). Since $F$ is finite, $\dim_k F = n$ is finite; fix a basis $e_1, \ldots, e_n$. Every element of $F$ is uniquely $c_1e_1 + \cdots + c_ne_n$ with $c_i \in k$, and $|k| = p$, so there are exactly $p^n$ such combinations. $\square$
+
+We write $\mathbb{F}_q$ (or $GF(q)$, "Galois field") for a field with $q$ elements. One can show any two finite fields of the same order $q = p^n$ are isomorphic, and one exists for every prime power $q$ — this existence is exactly the construction below; uniqueness requires the theory of splitting fields and is not proved here.
+
+#### Constructing $\mathbb{F}_{p^n}$
+
+Combine Sections 14.2–14.3 directly: for any irreducible $f(x) \in \mathbb{Z}_p[x]$ of degree $n$,
+$$\mathbb{F}_{p^n} := \mathbb{Z}_p[x]/\langle f(x)\rangle$$
+is a field (Corollary, 14.3). By the division algorithm, every coset has a unique representative $c_0 + c_1x + \cdots + c_{n-1}x^{n-1}$ with $c_i \in \mathbb{Z}_p$ (reduce any polynomial modulo $f$), so this field has exactly $p^n$ elements, consistent with the theorem above.
+
+#### Examples
+
+**Example 38 ($\mathbb{F}_4$).** $f(x) = x^2+x+1$ has no root in $\mathbb{Z}_2$: $f(0) = 1$, $f(1) = 1+1+1 = 1$. A degree-2 polynomial with no root is irreducible (a nontrivial factorization would need a degree-1, i.e. root-producing, factor). So
+$$\mathbb{F}_4 = \mathbb{Z}_2[x]/\langle x^2+x+1\rangle = \{0,\,1,\,\alpha,\,\alpha+1\}, \qquad \alpha^2 = \alpha + 1 \ \ (\text{since } \alpha^2+\alpha+1=0).$$
+Note $\mathbb{F}_4 \not\cong \mathbb{Z}_4$: the latter is not even a field, since $2 \cdot 2 = 0$ in $\mathbb{Z}_4$ makes $2$ a zero divisor.
+
+**Example 39 ($\mathbb{F}_8$).** $f(x) = x^3+x+1$ has no root in $\mathbb{Z}_2$ ($f(0)=1$, $f(1)=1$). Any nontrivial factorization of a cubic must include a linear (degree-1) factor, which would supply a root; since there is none, $f$ is irreducible. Hence
+$$\mathbb{F}_8 = \mathbb{Z}_2[x]/\langle x^3+x+1\rangle, \qquad |\mathbb{F}_8| = 2^3 = 8.$$
+
+**Example 40 ($\mathbb{F}_9$).** Over $\mathbb{Z}_3$: $0^2+1=1,\ 1^2+1=2,\ 2^2+1 \equiv 2$, so $x^2+1$ has no root and is irreducible over $\mathbb{Z}_3$ (compare Example 19, same polynomial over $\mathbb{R}$). Hence
+$$\mathbb{F}_9 = \mathbb{Z}_3[x]/\langle x^2+1\rangle, \qquad |\mathbb{F}_9| = 3^2 = 9.$$
+The same irreducible polynomial produces $\mathbb{C}$ over $\mathbb{R}$ and $\mathbb{F}_9$ over $\mathbb{Z}_3$ — the construction is identical, only the base field changes.
+
+**Non-example.** Over $\mathbb{Z}_2$, $x^2+1 = (x+1)^2$ **factors**, so it is reducible, and $\mathbb{Z}_2[x]/\langle x^2+1\rangle$ is **not** a field: it has the zero divisor $x+1$ (nonzero, but $(x+1)^2 \equiv 0$).
+
+### 14.6 Adjoining a Concrete Element: $F(\alpha)$
+
+Sections 14.3–14.5 build a new field **abstractly**, as a quotient $k[x]/\langle f\rangle$, whose elements are cosets. There is a second, more concrete route: suppose $F$ already sits inside some larger ring $E$ (an **extension ring** of $F$), and pick a specific element $\alpha \in E$. Adjoining $\alpha$ to $F$ produces a field precisely when $\alpha$ satisfies a polynomial condition over $F$.
+
+#### Definitions
+
+Let $E$ be a ring containing $F$ as a subring, and $\alpha \in E$.
+
+- $F[\alpha] = \{\, f(\alpha) \mid f(x) \in F[x] \,\}$, the smallest subring of $E$ containing $F$ and $\alpha$. This is exactly the image of the **evaluation homomorphism** $\operatorname{ev}_\alpha : F[x] \to E$, $f(x) \mapsto f(\alpha)$ — the same construction as Example 12's evaluation-at-$0$ map, now evaluated at $\alpha$ instead.
+- If $E$ is a field, $F(\alpha) = \{\, f(\alpha)/g(\alpha) \mid f, g \in F[x],\ g(\alpha) \neq 0 \,\}$ denotes the smallest sub**field** of $E$ containing $F$ and $\alpha$. Clearly $F[\alpha] \subseteq F(\alpha)$, with equality exactly when $F[\alpha]$ is already a field.
+
+$\alpha$ is called **algebraic** over $F$ if $f(\alpha) = 0$ for some nonzero $f \in F[x]$; otherwise $\alpha$ is **transcendental** over $F$.
+
+#### Theorem: When is $F[\alpha]$ a Field?
+
+> **Theorem.** Let $E \supseteq F$ be a field extension and $\alpha \in E$.
+>
+> (a) If $\alpha$ is **transcendental** over $F$, then $F[\alpha] \cong F[x]$, which is **not** a field, and $F(\alpha) \cong F(x)$ (the field of rational functions).
+>
+> (b) If $\alpha$ is **algebraic** over $F$, let $m(x) \in F[x]$ be the monic generator of $\ker(\operatorname{ev}_\alpha) = \{f \in F[x] \mid f(\alpha) = 0\}$ — the **minimal polynomial** of $\alpha$ over $F$. Then $m$ is irreducible over $F$, and
+> $$F[\alpha] \;\cong\; F[x]/\langle m(x)\rangle$$
+> is already a field. Consequently $F(\alpha) = F[\alpha]$.
+
+**Proof.** $\operatorname{ev}_\alpha$ is a ring homomorphism (Example 12), so $\ker(\operatorname{ev}_\alpha) \trianglelefteq F[x]$, and since $F[x]$ is a PID (Section 14.2), $\ker(\operatorname{ev}_\alpha) = \langle m(x)\rangle$ for some $m$ — taking $m = 0$ covers the case $\ker(\operatorname{ev}_\alpha) = \{0\}$, and otherwise $m$ is the (unique) monic polynomial of minimal degree in the kernel.
+
+**(a)** If $\alpha$ is transcendental, $\ker(\operatorname{ev}_\alpha) = \{0\}$, so $\operatorname{ev}_\alpha$ is injective. By the First Isomorphism Theorem (Section 9), $F[\alpha] = \operatorname{Im}(\operatorname{ev}_\alpha) \cong F[x]/\{0\} \cong F[x]$. This is not a field ($x$ has no inverse in $F[x]$), so $F(\alpha)$ is strictly larger, namely the field of fractions $F(x)$.
+
+**(b)** If $\alpha$ is algebraic, $m \neq 0$. To see $m$ is irreducible: suppose $m = gh$ with $\deg g, \deg h \geq 1$. Then $g(\alpha)h(\alpha) = m(\alpha) = 0$ in $E$, and since $E$ is a field (hence has no zero divisors), $g(\alpha) = 0$ or $h(\alpha) = 0$. But $\deg g, \deg h < \deg m$, contradicting that $m$ has minimal degree among nonzero elements of $\ker(\operatorname{ev}_\alpha)$. So $m$ is irreducible.
+
+By the First Isomorphism Theorem, $F[\alpha] = \operatorname{Im}(\operatorname{ev}_\alpha) \cong F[x]/\ker(\operatorname{ev}_\alpha) = F[x]/\langle m(x)\rangle$, which is a field by the Corollary in Section 14.3 (since $m$ is irreducible). Since $F[\alpha]$ is already a field and $F(\alpha)$ is by definition the *smallest* field containing $F[\alpha]$, we get $F(\alpha) = F[\alpha]$. $\square$
+
+> **Remark.** The zero-divisor argument in (b) only used that $E$ has no zero divisors — so the conclusion "$m$ is irreducible" and "$F[\alpha] \cong F[x]/\langle m\rangle$ is a field" holds already when $E$ is merely an **integral domain** containing $F$, not necessarily a field.
+
+> **Relation to Kronecker's Theorem (14.4).** This is the same construction as Kronecker's Theorem, run in the opposite direction. There, we started only with the abstract polynomial $f$ and *built* $K = k[x]/\langle f\rangle$, afterward noticing that $\alpha = x + \langle f\rangle$ is a root sitting inside $K$. Here, $\alpha$ is handed to us already, sitting concretely inside a pre-existing $E$, and we discover that the abstract quotient $F[x]/\langle m\rangle$ is an isomorphic copy of the concrete ring $F[\alpha]$ we get by literally plugging $\alpha$ into polynomials.
+
+> **Degree and basis.** When $\alpha$ is algebraic with $\deg m = n$, the isomorphism $F(\alpha) \cong F[x]/\langle m(x)\rangle$ carries the basis $\{1, x, \ldots, x^{n-1}\}$ of the latter (Section 14.5) to $\{1, \alpha, \alpha^2, \ldots, \alpha^{n-1}\}$. So $F(\alpha)$ is an $n$-dimensional $F$-vector space, and every element of $F(\alpha)$ is uniquely $c_0 + c_1\alpha + \cdots + c_{n-1}\alpha^{n-1}$ with $c_i \in F$. This number $n = \deg m$ is called the **degree** of the extension, written $[F(\alpha):F]$.
+
+#### Examples
+
+**Example 41.** $F = \mathbb{R}$, $E = \mathbb{C}$, $\alpha = i$. The minimal polynomial of $i$ over $\mathbb{R}$ is $x^2+1$ (irreducible over $\mathbb{R}$, and $i \notin \mathbb{R}$ rules out any degree-$1$ polynomial vanishing at $i$). So $\mathbb{R}(i) = \mathbb{R}[i] \cong \mathbb{R}[x]/\langle x^2+1\rangle$, and indeed $\mathbb{R}[i] = \{a+bi \mid a,b\in\mathbb{R}\} = \mathbb{C}$ — recovering Example 19 from the concrete side.
+
+**Example 42.** $F = \mathbb{Q}$, $E = \mathbb{R}$, $\alpha = \sqrt{2}$. The minimal polynomial is $x^2-2$ (irreducible over $\mathbb{Q}$, since $\sqrt 2 \notin \mathbb{Q}$). So
+$$\mathbb{Q}(\sqrt2) = \mathbb{Q}[\sqrt2] = \{a+b\sqrt2 \mid a,b \in \mathbb{Q}\} \cong \mathbb{Q}[x]/\langle x^2-2\rangle,$$
+a field with $[\mathbb{Q}(\sqrt2):\mathbb{Q}] = 2$.
+
+**Example 43.** $F = \mathbb{Q}$, $E = \mathbb{R}$, $\alpha = \pi$. By the Lindemann–Weierstrass theorem, $\pi$ is **transcendental** over $\mathbb{Q}$ (no nonzero rational polynomial vanishes at $\pi$). So $\mathbb{Q}[\pi] \cong \mathbb{Q}[x]$ is *not* a field ($\pi$ itself has no multiplicative inverse expressible as a polynomial in $\pi$ with rational coefficients), and $\mathbb{Q}(\pi) \cong \mathbb{Q}(x)$, the field of rational functions in one variable.
+
+**Non-example.** Take $E = \mathbb{Z}_6$ (not a field, and not a domain) and try to adjoin some $\alpha$: the irreducibility argument in part (b) breaks down precisely because $E$ has zero divisors, so nothing guarantees $F[\alpha]$ is a field — consistent with the Remark above requiring $E$ to be at least an integral domain.
+
+### 14.7 Summary: Routes to a New Field
+
+| Method | Input | Output | Reference |
+|---|---|---|---|
+| Quotient by a maximal ideal | ring $R$, maximal ideal $M$ | field $R/M$ | 13.2 |
+| Adjoin a root of an irreducible polynomial (abstract) | field $k$, irreducible $f \in k[x]$ | field $k[x]/\langle f\rangle \supseteq k$ | 14.3–14.4 |
+| Finite field of order $p^n$ | prime $p$, irreducible $f \in \mathbb{Z}_p[x]$, $\deg f = n$ | field $\mathbb{F}_{p^n}$ | 14.5 |
+| Adjoin a concrete algebraic element | extension ring/domain $E \supseteq F$, $\alpha \in E$ algebraic over $F$ | field $F(\alpha) = F[\alpha] \cong F[x]/\langle m(x)\rangle$ | 14.6 |
+
+All four are one idea at increasing specificity or from different directions: an irreducible polynomial generates a maximal ideal (14.3), whose quotient collapses the polynomial ring onto a field containing a root of that polynomial. Kronecker's theorem (14.4) builds this root abstractly from scratch; the $F(\alpha)$ construction (14.6) instead starts from a root already sitting in a known extension and recovers the same abstract quotient as its isomorphic description; finite fields (14.5) are the special case where the base field $\mathbb{Z}_p$ is itself finite.
