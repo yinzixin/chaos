@@ -8,7 +8,9 @@
 
 Let $F$ and $E$ be fields with $F \subseteq E$ (as a subfield, i.e., $F$ is a subring of $E$ that is itself a field, sharing the same $1$). We call $E$ a **field extension** (域扩张) of $F$, written $E/F$ (read "$E$ over $F$" — this is *not* a quotient!).
 
-> **Key observation.** If $E/F$ is a field extension, then $E$ is a **vector space over $F$**: vector addition is the field addition of $E$, and scalar multiplication is the field multiplication of $E$ restricted to $F \times E$. The field axioms of $E$ give exactly the vector space axioms. This single observation imports all of linear algebra into field theory.
+> **Key observation.** If $E/F$ is a field extension, then $E$ is a **vector space over $F$**: vector addition is the field addition of $E$, and scalar multiplication is the field multiplication of $E$ restricted to $F \times E$. The field axioms of $E$ give exactly the vector space axioms — see the axiom-by-axiom verification in Section 14.5 of `ring_field.md` ("Why the Field Axioms Give Exactly the Vector Space Axioms"): the additive axioms are shared verbatim, the scalar axioms are $E$'s distributivity/associativity/unity reread with the left factor restricted to $F$. This single observation imports all of linear algebra into field theory.
+>
+> The passage is deliberately **lossy**: the vector space structure keeps only the slice $F \times E \to E$ of $E$'s multiplication and forgets how to multiply two *vectors* (e.g. $\sqrt2 \cdot \sqrt3 = \sqrt6$ is invisible to linear algebra). What survives suffices for everything dimension-based in this chapter — the degree $[E:F]$, the Tower Law, "finite $\Rightarrow$ algebraic." What is forgotten is recovered by Galois theory: two extensions can be identical as vector spaces yet wildly different as fields — $\mathbb{Q}(\sqrt[4]2)$ and $\mathbb{Q}(\zeta_8)$ are both $4$-dimensional over $\mathbb{Q}$, but the latter is normal (Section 5) and the former is not. Dimension sees the additive skeleton; the Galois group (Section 7) sees the multiplicative flesh.
 
 ### Definition (Degree)
 
@@ -256,6 +258,36 @@ the last equality because $\omega = \alpha_2/\alpha_1 \in E$ and conversely $\al
 > — "one radical + the roots of unity that shuffle it around." Example 10 ($x^2 - 2$) was the degenerate case: $\zeta_2 = -1 \in \mathbb{Q}$ already, so nothing extra was needed and the loop finished in one pass.
 
 > **Remark 3 (concrete vs. abstract).** Above we worked inside $\mathbb{C}$, picking honest complex numbers. Kronecker's construction (Section 14.4 of `ring_field.md`) runs the identical loop with no ambient $\mathbb{C}$: each adjunction is a quotient $K[x]/\langle p\rangle$, and "the root" is the coset $x + \langle p\rangle$. Over $\mathbb{Q}$ the concrete route is more comfortable; over base fields with no natural ambient closure (like $\mathbb{F}_p$) the abstract route is the only one — it is exactly how the finite fields $\mathbb{F}_{p^n}$ of Example 13 below get built.
+
+#### Why factor over $K$, but look for the roots in $\mathbb{C}$?
+
+A natural question about the recipe: step 1 says "factor over the *current* field $K$" — so why did the walkthrough keep referring to roots living in $\mathbb{C}$? Because two different roles are being played, and they must not be conflated.
+
+**Factoring is a question about coefficients; it is relative to $K$.** "Factor over $K$" asks: can $f$ be written as a product of lower-degree polynomials *with coefficients in $K$*? The answer changes as $K$ grows — that is what drives the loop:
+$$x^3 - 2 = \underbrace{x^3-2}_{\text{irreducible over } \mathbb{Q}} = \underbrace{(x - \sqrt[3]2)(x^2 + \sqrt[3]2\,x + \sqrt[3]4)}_{\text{over } \mathbb{Q}(\sqrt[3]2)} = \underbrace{(x-\alpha_1)(x-\alpha_2)(x-\alpha_3)}_{\text{over } \mathbb{Q}(\sqrt[3]2,\,\omega)}$$
+
+**But the roots themselves are almost never in $K$ — that is the entire point.** If the roots were already in $\mathbb{Q}$, the polynomial would already split and there would be nothing to build. The roots must come from *outside* the current field, and we need somewhere to find them. For base field $\mathbb{Q}$, the field $\mathbb{C}$ is a **guaranteed warehouse**: by the Fundamental Theorem of Algebra, every rational polynomial has *all* of its roots in $\mathbb{C}$. That guarantee lets us simply point: "the roots are $\sqrt[3]2$, $\omega\sqrt[3]2$, $\omega^2\sqrt[3]2$ — those specific complex numbers."
+
+Be clear about what $\mathbb{C}$ is **not** doing:
+
+- $\mathbb{C}$ is *not* the splitting field — it is absurdly too big (uncountable, full of transcendentals like $\pi$ that have nothing to do with $x^3-2$). The splitting field is the **smallest** subfield of $\mathbb{C}$ containing $\mathbb{Q}$ and the roots — a tiny $6$-dimensional $\mathbb{Q}$-vector space.
+- We never factor "over $\mathbb{C}$" as an algorithm step. $\mathbb{C}$ only supplies the *elements* $\alpha_i$ to adjoin; the fields actually built and factored over are the small ones: $\mathbb{Q} \subset \mathbb{Q}(\sqrt[3]2) \subset \mathbb{Q}(\sqrt[3]2, \omega)$.
+
+The pattern is already present in the simplest case: to build $\mathbb{Q}(\sqrt2)$ one reaches into $\mathbb{R}$ and grabs the element $\sqrt2$ — but the field built is the $2$-dimensional $\mathbb{Q}(\sqrt2)$, not $\mathbb{R}$. The big ambient field is scaffolding.
+
+In the walkthrough, $\mathbb{C}$ was used in two distinct ways:
+
+1. **As the source of adjoinable elements** (essential *for this route*): "adjoin $\alpha_2$" means "form $K_1(\alpha_2)$ inside $\mathbb{C}$."
+2. **As a diagnostic for irreducibility over $K_1$** (a convenience): to show $x^2 + \sqrt[3]2\,x + \sqrt[3]4$ irreducible over $K_1$, we argued that its roots *in $\mathbb{C}$* are non-real while $K_1 \subset \mathbb{R}$ — so no root lies in $K_1$, and a quadratic with no root in the field is irreducible over it. Knowledge of where the roots sit in the warehouse answered a factorization question about the small field; this is legitimate (for degree $2$ and $3$, irreducible over $K$ $\iff$ no root in $K$) and usually far easier than manipulating coefficients.
+
+And if there is no warehouse? That is Remark 3's territory: over $\mathbb{F}_p$ there is no familiar "$\mathbb{C}$" to reach into, so Kronecker's quotient *manufactures* a root out of thin air. The algorithm is identical; only the source of new roots differs:
+
+| | Concrete route (over $\mathbb{Q}$) | Abstract route (any base field) |
+|---|---|---|
+| Where a new root comes from | picked out of $\mathbb{C}$ | the coset $x + \langle p\rangle$ in $K[x]/\langle p\rangle$ |
+| What guarantees it exists | Fundamental Theorem of Algebra | Kronecker's theorem (14.4 of `ring_field.md`) |
+
+**Summary:** factoring is over $K$ because irreducibility is a *relative* notion that steers the algorithm; the roots are sought in $\mathbb{C}$ because roots must come from outside $K$, and $\mathbb{C}$ is simply the most convenient certified place where they are all known to exist. Any field big enough to contain the roots would serve — $\mathbb{C}$ is chosen for comfort, not by necessity.
 
 **Example 12.** The splitting field of $x^4 + 1$ over $\mathbb{Q}$ is $\mathbb{Q}(\zeta_8) = \mathbb{Q}(i, \sqrt2)$, of degree $4$ — Example 38 of `ring_field.md` already showed $\mathbb{Q}[x]/\langle x^4{+}1\rangle \cong \mathbb{Q}(\zeta_8)$, and all four roots $\zeta_8, \zeta_8^3, \zeta_8^5, \zeta_8^7$ are powers of $\zeta_8$, so adjoining one root splits the whole polynomial. Here $[E:\mathbb{Q}] = 4 < 4! = 24$: how much of the bound is used depends on how entangled the roots are.
 

@@ -889,6 +889,50 @@ A finite field $F$ cannot have characteristic $0$ (the elements $1, \overline 2,
 
 *Proof.* View $F$ as a vector space over its prime subfield $k$ (vector addition = ring addition, scalar multiplication = ring multiplication restricted to $k \times F$; the field axioms of $F$ give exactly the vector space axioms). Since $F$ is finite, $\dim_k F = n$ is finite; fix a basis $e_1, \ldots, e_n$. Every element of $F$ is uniquely $c_1e_1 + \cdots + c_ne_n$ with $c_i \in k$, and $|k| = p$, so there are exactly $p^n$ such combinations. $\square$
 
+#### Why the Field Axioms Give Exactly the Vector Space Axioms
+
+The proof above leaned on a one-line claim worth verifying once in full. The general statement: **if $E \supseteq F$ are fields (with $F$ a subfield of $E$), then $E$ is a vector space over $F$** — with no extra work. The proposed cast:
+
+| Vector space ingredient | What we use |
+|---|---|
+| Set of vectors $V$ | the set $E$ |
+| Scalars | elements of $F$ |
+| Vector addition $u + v$ | the field addition of $E$ |
+| Scalar multiplication $a \cdot u$ ($a \in F$, $u \in E$) | the field multiplication of $E$, restricted to pairs whose left factor lies in $F$ |
+
+The last row is the whole trick: since $F \subseteq E$, a scalar $a \in F$ is *also* an element of $E$, so the product $au$ already makes sense inside $E$ — no new operation is defined, we merely refuse to use the old one in full generality. Closure is immediate: $a, u \in E$ give $au \in E$. Now the eight vector space axioms, one by one.
+
+**The four axioms about addition.** A vector space requires $(V, +)$ to be an abelian group. But the first block of the ring axioms (Section 1, axioms 1–5) says precisely: $(E, +)$ **is** an abelian group. This half is satisfied verbatim — not "follows from," but *is literally the same statement*. The zero vector is $0_E$; the additive inverse of $u$ is $-u$.
+
+**The four axioms about scalar multiplication.** Take $a, b \in F$ and $u, v \in E$ throughout.
+
+- **(V1)** $a(u+v) = au + av$ — exactly **left distributivity** in $E$ (axiom 8), applied to $a, u, v \in E$.
+- **(V2)** $(a+b)u = au + bu$ — **right distributivity** in $E$ (axiom 9), but with a subtlety: on the left, $a+b$ is a *scalar* sum computed in $F$, while $E$'s distributive law speaks about sums computed in $E$. These agree only because $F$ is a **sub**field: its operations are by definition the *restrictions* of $E$'s, so adding $a, b$ "in $F$" and "in $E$" is the same computation. (If $F$ were an unrelated field merely injected into $E$ as a set, this axiom could fail.)
+- **(V3)** $(ab)u = a(bu)$ — **associativity of multiplication** in $E$ (axiom 7); the same restriction subtlety as (V2), resolved the same way.
+- **(V4)** $1 \cdot u = u$ — the **unity** axiom of $E$, *provided* the scalar $1_F$ is the same element as $1_E$. For fields this is automatic:
+
+> **Claim.** If $F \subseteq E$ is a subring which is a field, its unity automatically equals $1_E$.
+>
+> *Proof.* Let $e = 1_F$. Then $e \cdot e = e$ (computed in $E$, since operations are restricted), so $e(e - 1_E) = 0$. A field has no zero divisors, and $e \neq 0$, hence $e = 1_E$. $\square$
+>
+> Contrast with general rings, where a subring's unity can genuinely differ from the ambient one (the summary table in Section 3 warns "may differ from $R$'s unity") — the zero-divisor argument is what fields add.
+
+**The complete dictionary:**
+
+| Vector space axiom | Field axiom of $E$ it comes from | Extra ingredient needed |
+|---|---|---|
+| $(V,+)$ abelian group (4 axioms) | $(E,+)$ abelian group (axioms 1–5) | — |
+| $a(u+v) = au+av$ | left distributivity (axiom 8) | — |
+| $(a+b)u = au+bu$ | right distributivity (axiom 9) | $F$'s $+$ is the restriction of $E$'s |
+| $(ab)u = a(bu)$ | associativity of $\cdot$ (axiom 7) | $F$'s $\cdot$ is the restriction of $E$'s |
+| $1u = u$ | unity of $E$ | $1_F = 1_E$ (automatic, by the Claim) |
+
+Every axiom is accounted for, and no field axiom had to be *proved* — only *reread* with certain arguments restricted to $F$. That is the precise sense of "give exactly."
+
+> **What the vector space structure forgets.** The field $E$ can multiply *any* two of its elements ($E \times E \to E$); the vector space structure retains only the slice $F \times E \to E$ (scalar times vector). Multiplying two *vectors* is extra structure that linear algebra does not see. The passage "field $\to$ vector space" is deliberately lossy — and that is its power: what survives is enough to define dimension (the counting $|F| = p^n$ above, and the **degree** $[E:F]$ of `Galois.md`), while what is forgotten is precisely what Galois theory later recovers.
+
+Sanity check on the smallest example, $\mathbb{C}$ over $\mathbb{R}$: vectors are complex numbers, scalars are reals, and $a(x + yi) = ax + ayi$ is complex multiplication restricted to a real left factor — exactly the scalar multiplication of the plane $\mathbb{R}^2$. The familiar picture of $\mathbb{C}$ as a two-dimensional real plane *is* this construction.
+
 We write $\mathbb{F}_q$ (or $GF(q)$, "Galois field") for a field with $q$ elements. One can show any two finite fields of the same order $q = p^n$ are isomorphic, and one exists for every prime power $q$ — this existence is exactly the construction below; uniqueness requires the theory of splitting fields and is not proved here.
 
 #### Constructing $\mathbb{F}_{p^n}$
