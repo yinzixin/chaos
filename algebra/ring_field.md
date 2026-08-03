@@ -838,7 +838,21 @@ $(\Leftarrow)$ Since $\deg f \geq 1$, $1 \notin \langle f \rangle$, so $\langle 
 
 Either way $J \in \{\langle f\rangle, k[x]\}$, so $\langle f\rangle$ is maximal.
 
-$(\Rightarrow)$ Suppose instead $f = gh$ with $\deg g, \deg h \geq 1$ (i.e. $f$ reducible). Then $f \in \langle g \rangle$, so $\langle f\rangle \subseteq \langle g\rangle$. If $\langle f \rangle = \langle g\rangle$ then $f \mid g$, giving $\deg f \leq \deg g$; but $\deg g < \deg f$ since $\deg h \geq 1$ — contradiction. So $\langle f\rangle \subsetneq \langle g \rangle$. Also $\langle g \rangle \neq k[x]$ since $\deg g \geq 1$. Hence $\langle f \rangle \subsetneq \langle g\rangle \subsetneq k[x]$, so $\langle f\rangle$ is **not** maximal. $\square$
+$(\Rightarrow)$ We prove the contrapositive: if $f$ is **reducible**, then $\langle f\rangle$ is **not** maximal. So suppose $f = gh$ with $\deg g \geq 1$ *and* $\deg h \geq 1$. We exhibit an ideal strictly between $\langle f\rangle$ and $k[x]$, namely $\langle g\rangle$, by checking both inclusions are strict:
+
+$$\langle f\rangle \;\subsetneq\; \langle g\rangle \;\subsetneq\; k[x].$$
+
+*Step 1: $\langle f\rangle \subseteq \langle g\rangle$.* Since $f = gh$, $f$ is a multiple of $g$, so $f \in \langle g\rangle$. An ideal containing $f$ contains every multiple of $f$, hence $\langle f\rangle \subseteq \langle g\rangle$.
+
+*Step 2: the inclusion is strict, $\langle f\rangle \neq \langle g\rangle$ — this is where $\deg h \geq 1$ is used.* Suppose for contradiction $\langle f\rangle = \langle g\rangle$. Then $g \in \langle g\rangle = \langle f\rangle$, so $g$ is a multiple of $f$, i.e. $f \mid g$; hence $\deg f \leq \deg g$. But from $f = gh$ and the degree formula in $k[x]$ (valid since $k$ is a domain),
+$$\deg g = \deg f - \deg h \;\leq\; \deg f - 1 \;<\; \deg f,$$
+the middle inequality using $\deg h \geq 1$. This contradicts $\deg f \leq \deg g$. So $\langle f\rangle \subsetneq \langle g\rangle$.
+
+*Step 3: $\langle g\rangle \neq k[x]$ — this is where $\deg g \geq 1$ is used.* In $k[x]$ the units are exactly the nonzero constants (degree $0$), and $\langle g\rangle = k[x]$ iff $g$ is a unit. Since $\deg g \geq 1$, $g$ is not a unit, so $\langle g\rangle \neq k[x]$. (This step depends on $g$, not $h$: even if $h$ were constant, a non-constant $g$ alone already makes $\langle g\rangle$ proper.)
+
+Combining the three steps gives $\langle f\rangle \subsetneq \langle g\rangle \subsetneq k[x]$, an ideal properly between $\langle f\rangle$ and the whole ring. Therefore $\langle f\rangle$ is **not** maximal. $\square$
+
+> The two hypotheses do distinct jobs: $\deg h \geq 1$ forces the *left* inclusion strict (Step 2), while $\deg g \geq 1$ forces the *right* inclusion strict (Step 3). Reducibility, supplying both at once, is exactly what the argument needs.
 
 #### Corollary (the field-construction engine)
 
