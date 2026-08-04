@@ -852,7 +852,7 @@ the middle inequality using $\deg h \geq 1$. This contradicts $\deg f \leq \deg 
 
 Combining the three steps gives $\langle f\rangle \subsetneq \langle g\rangle \subsetneq k[x]$, an ideal properly between $\langle f\rangle$ and the whole ring. Therefore $\langle f\rangle$ is **not** maximal. $\square$
 
-> The two hypotheses do distinct jobs: $\deg h \geq 1$ forces the *left* inclusion strict (Step 2), while $\deg g \geq 1$ forces the *right* inclusion strict (Step 3). Reducibility, supplying both at once, is exactly what the argument needs.
+
 
 #### Corollary (the field-construction engine)
 
